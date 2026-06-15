@@ -1,6 +1,7 @@
 package com.underveil.manager.service;
 
 import com.underveil.manager.entity.Member;
+import com.underveil.manager.exception.ResourceNotFoundException;
 import com.underveil.manager.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,10 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Optional<Member> getMemberById(Long id) {
-        return memberRepository.findById(id);
+    public Member getMemberById(Long id) {
+        return memberRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Member not found"));
     }
-
     public Optional<Member> getMemberByEmail(String email) {
         return memberRepository.findByEmail(email);
     }

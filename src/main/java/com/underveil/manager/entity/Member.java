@@ -15,6 +15,7 @@ public class Member {
     private String email;
     private String position;
     private String status;
+
     @Column(name = "current_proj")
     private String currentProject;
 
