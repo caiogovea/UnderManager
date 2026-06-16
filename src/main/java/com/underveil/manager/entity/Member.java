@@ -1,7 +1,11 @@
 package com.underveil.manager.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "members")
 public class Member {

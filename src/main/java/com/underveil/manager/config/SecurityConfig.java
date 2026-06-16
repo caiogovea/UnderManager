@@ -1,4 +1,4 @@
-/*package com.underveil.manager.config;
+package com.underveil.manager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecutiryConfig {
+public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -17,4 +17,4 @@ public class SecutiryConfig {
 
         return http.build();
     }
-}*/
+}

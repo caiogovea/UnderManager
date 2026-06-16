@@ -29,8 +29,23 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Member not found"));
     }
+
     public Optional<Member> getMemberByEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    public Member updateMember(Long id, Member member) {
+
+        Member existingMember = getMemberById(id);
+
+        existingMember.setName(member.getName());
+        existingMember.setAge(member.getAge());
+        existingMember.setEmail(member.getEmail());
+        existingMember.setPosition(member.getPosition());
+        existingMember.setStatus(member.getStatus());
+        existingMember.setCurrentProject(member.getCurrentProject());
+
+        return memberRepository.save(existingMember);
     }
 
     public void deleteMember(Long id) {

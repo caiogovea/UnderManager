@@ -35,6 +35,18 @@ import java.util.Optional;
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMember);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Member> updateMember(
+            @PathVariable Long id,
+            @RequestBody Member member) {
+
+        Member savedMember = memberService.updateMember(id, member);
+
+        return ResponseEntity.ok(savedMember);
+    }
+
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember (@PathVariable Long id) {
         memberService.deleteMember(id);
