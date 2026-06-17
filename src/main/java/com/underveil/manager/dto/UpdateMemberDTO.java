@@ -1,19 +1,10 @@
-package com.underveil.manager.entity;
+package com.underveil.manager.dto;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.Data;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "members")
-public class Member {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UpdateMemberDTO {
 
     @NotBlank
     private String name;
@@ -33,12 +24,6 @@ public class Member {
     @NotBlank
     private String status;
 
-    @Column(name = "current_proj")
     @NotBlank
     private String currentProject;
-
-
-
 }
-
-

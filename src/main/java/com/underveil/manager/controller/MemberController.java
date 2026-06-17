@@ -1,7 +1,10 @@
 package com.underveil.manager.controller;
 
+import com.underveil.manager.dto.CreateMemberDTO;
+import com.underveil.manager.dto.UpdateMemberDTO;
 import com.underveil.manager.entity.Member;
 import com.underveil.manager.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +32,8 @@ import java.util.Optional;
     }
 
     @PostMapping
-    public ResponseEntity<Member> createMember(@RequestBody Member member) {
+    public ResponseEntity<Member> createMember(@Valid @RequestBody CreateMemberDTO member) {
+
         Member savedMember = memberService.createMember(member);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMember);
@@ -38,7 +42,7 @@ import java.util.Optional;
     @PutMapping("/{id}")
     public ResponseEntity<Member> updateMember(
             @PathVariable Long id,
-            @RequestBody Member member) {
+            @Valid @RequestBody UpdateMemberDTO member) {
 
         Member savedMember = memberService.updateMember(id, member);
 

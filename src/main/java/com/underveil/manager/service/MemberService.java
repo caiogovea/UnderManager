@@ -1,5 +1,8 @@
 package com.underveil.manager.service;
 
+import com.underveil.manager.dto.CreateMemberDTO;
+import com.underveil.manager.dto.MemberResponseDTO;
+import com.underveil.manager.dto.UpdateMemberDTO;
 import com.underveil.manager.entity.Member;
 import com.underveil.manager.exception.ResourceNotFoundException;
 import com.underveil.manager.repository.MemberRepository;
@@ -21,7 +24,17 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Member createMember(Member member) {
+    public Member createMember(CreateMemberDTO memberDTO) {
+
+        Member member = new Member();
+
+        member.setName(memberDTO.getName());
+        member.setAge(memberDTO.getAge());
+        member.setEmail(memberDTO.getEmail());
+        member.setPosition(memberDTO.getPosition());
+        member.setStatus(memberDTO.getStatus());
+        member.setCurrentProject(memberDTO.getCurrentProject());
+
         return memberRepository.save(member);
     }
 
@@ -34,16 +47,16 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
-    public Member updateMember(Long id, Member member) {
+    public Member updateMember(Long id, UpdateMemberDTO memberDTO) {
 
         Member existingMember = getMemberById(id);
 
-        existingMember.setName(member.getName());
-        existingMember.setAge(member.getAge());
-        existingMember.setEmail(member.getEmail());
-        existingMember.setPosition(member.getPosition());
-        existingMember.setStatus(member.getStatus());
-        existingMember.setCurrentProject(member.getCurrentProject());
+        existingMember.setName(memberDTO.getName());
+        existingMember.setAge(memberDTO.getAge());
+        existingMember.setEmail(memberDTO.getEmail());
+        existingMember.setPosition(memberDTO.getPosition());
+        existingMember.setStatus(memberDTO.getStatus());
+        existingMember.setCurrentProject(memberDTO.getCurrentProject());
 
         return memberRepository.save(existingMember);
     }
@@ -52,6 +65,16 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
+    private MemberResponseDTO toResponseDTO(Member member) {
 
-
+        return new MemberResponseDTO(
+                member.getId(),
+                member.getName(),
+                member.getAge(),
+                member.getEmail(),
+                member.getPosition(),
+                member.getStatus(),
+                member.getCurrentProject()
+        );
+    }
 }
