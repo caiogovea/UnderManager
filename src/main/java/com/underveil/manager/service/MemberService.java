@@ -8,6 +8,7 @@ import com.underveil.manager.exception.ResourceNotFoundException;
 import com.underveil.manager.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,11 +21,16 @@ public class MemberService {
         this.memberRepository = mbrepository;
     }
 
-    public List<Member> getAllMembers() {
-        return memberRepository.findAll();
+    public List<MemberResponseDTO> getAllMembers() {
+        List<Member> members = memberRepository.findAll();
+        List<MemberResponseDTO> response = new ArrayList<>();
+        for (Member member : members) {
+            response.add(toResponseDTO(member));
+        }
+        return response;
     }
 
-    public Member createMember(CreateMemberDTO memberDTO) {
+    public MemberResponseDTO createMember(CreateMemberDTO memberDTO) {
 
         Member member = new Member();
 
@@ -35,21 +41,26 @@ public class MemberService {
         member.setStatus(memberDTO.getStatus());
         member.setCurrentProject(memberDTO.getCurrentProject());
 
-        return memberRepository.save(member);
+        Member savedMember = memberRepository.save(member);
+        return toResponseDTO(savedMember);
+
     }
 
-    public Member getMemberById(Long id) {
-        return memberRepository.findById(id).orElseThrow(() ->
+    public MemberResponseDTO getMemberById(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Member not found"));
+
+        return toResponseDTO(member);
     }
 
     public Optional<Member> getMemberByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 
-    public Member updateMember(Long id, UpdateMemberDTO memberDTO) {
+    public MemberResponseDTO updateMember(Long id, UpdateMemberDTO memberDTO) {
 
-        Member existingMember = getMemberById(id);
+        Member existingMember = memberRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Member not found"));
 
         existingMember.setName(memberDTO.getName());
         existingMember.setAge(memberDTO.getAge());
@@ -58,7 +69,8 @@ public class MemberService {
         existingMember.setStatus(memberDTO.getStatus());
         existingMember.setCurrentProject(memberDTO.getCurrentProject());
 
-        return memberRepository.save(existingMember);
+        Member savedMember = memberRepository.save(existingMember);
+        return toResponseDTO(savedMember);
     }
 
     public void deleteMember(Long id) {

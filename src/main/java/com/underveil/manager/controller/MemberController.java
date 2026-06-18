@@ -1,6 +1,7 @@
 package com.underveil.manager.controller;
 
 import com.underveil.manager.dto.CreateMemberDTO;
+import com.underveil.manager.dto.MemberResponseDTO;
 import com.underveil.manager.dto.UpdateMemberDTO;
 import com.underveil.manager.entity.Member;
 import com.underveil.manager.service.MemberService;
@@ -27,7 +28,7 @@ import java.util.Optional;
       }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
+    public ResponseEntity<MemberResponseDTO> getMemberById(@PathVariable Long id) {
         return ResponseEntity.ok(memberService.getMemberById(id));
     }
 
@@ -49,16 +50,10 @@ import java.util.Optional;
         return ResponseEntity.ok(savedMember);
     }
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember (@PathVariable Long id) {
         memberService.deleteMember(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
-
 }
 
